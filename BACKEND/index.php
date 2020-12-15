@@ -3,8 +3,6 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-use Firebase\JWT\JWT;
-
 require "./vendor/autoload.php";
 require "./Clases/Telefono.php";
 
