@@ -12,25 +12,15 @@ $config['addContentLengthHeader'] = false;
 $app = new \Slim\App(["settings" => $config]);
 
 
-$app->group("/dia",function(){
+$app->group("/telefono",function(){
 
     $this->post("/agregar",\Telefono::class . "::AgregarUno");
-    $this->get("/traerTodos",\Telefono::class . "::TraerTodos");
+    $this->get("/traerTodos/{nombreArchivo}",\Telefono::class . "::TraerTodos");
     $this->delete("/borrar",\Telefono::class . "::BorrarUno");
     $this->put("/modificar",\Telefono::class . "::ModificarUno");
 });
 
 $app->run();
-
-
-
-
-
-
-
-
-
-
 
 
 ?>

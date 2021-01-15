@@ -10,6 +10,8 @@ class Telefono
     public $numero;
     public $territorio;
     public $direccion;
+    public $estado; //Revisita,No llamar,Se puede
+    public $esNegocio;//bool
     
 
     public function __construct($_nombreCompleto,$_numero,$_territorio,$_direccion){
@@ -45,6 +47,7 @@ class Telefono
     public static function GenerarID($nombreArchivo)
     {
         $lista=self::TraerTelefonosJSON($nombreArchivo);
+        var_dump($lista);
         $lista=$lista;
         $retorno=1;
         if(!empty($lista))
@@ -58,7 +61,7 @@ class Telefono
 
     public static function AgregarEnArchivoJSON($nombreArchivo,$json)
     {
-        $path="./Meses/". $nombreArchivo;
+        $path="./Archivos/". $nombreArchivo .".json";
         $archivo=fopen($path,"a");
         $retorno=false;
         $cadenaJson=json_encode($json);
@@ -81,6 +84,7 @@ class Telefono
         
         $json=json_decode($recibo["cadenaJson"]);
         $nombreArchivo=$recibo["nombreArchivo"];
+        
         $json->id= self::GenerarID($nombreArchivo);
 
         $retorno= new stdClass();
@@ -106,34 +110,38 @@ class Telefono
     public static function TraerTelefonosJSON($nombreArchivo)
     {
         
-        $path="./Meses/" . $nombreArchivo;
-        $archivo=fopen($path,"r");
+        $path="./Archivos/" . $nombreArchivo . ".json";
         $listaRetorno=array();
 
-        if(isset($archivo))
+        if(file_exists($path))
         {
-            if(filesize($path) > 0)
+            $archivo=fopen($path,"r");
+            if(isset($archivo))
             {
-                while(!feof($archivo))
+                if(filesize($path) > 0)
                 {
-                    $cadenaJson=fgets($archivo);
-                    if(!empty($cadenaJson))
+                    while(!feof($archivo))
                     {
-                        $json=json_decode($cadenaJson);
-                        array_push($listaRetorno,$json);
-                    }
+                        $cadenaJson=fgets($archivo);
+                        if(!empty($cadenaJson))
+                        {
+                            $json=json_decode($cadenaJson);
+                            array_push($listaRetorno,$json);
+                        }
 
+                    }
                 }
+                else
+                {
+                    $listaRetorno=false;
+                }
+                
+                fclose($archivo);
             }
-            else
-            {
-                $listaRetorno=false;
-            }
-            
-            fclose($archivo);
         }
 
         return $listaRetorno;
+        
         
     }
 
@@ -167,6 +175,130 @@ class Telefono
 
         return $response->withJson($retorno,$retorno->status);
     }
+
+    public static function EscribirEnArchivoJSON($lista,$nombreArchivo)
+    {
+        $path="./Archivos/".$nombreArchivo.".json";
+        $archivo=fopen($path,"w");
+        $retorno=false;
+        
+        if(isset($archivo))
+        {
+            foreach ($lista as $key => $i) {
+                $cadenaJson=json_encode($i);
+                fwrite($archivo,$cadenaJson . "\n");    
+            }
+            
+            fclose($archivo);
+            $retorno=true;
+        }
+
+        return $retorno;
+    }
+
+    public static function BorrarUnoJSON($id,$nombreArchivo)
+    {
+        $lista=self::TraerTelefonosJSON($nombreArchivo);
+        $nuevaLista=array();
+        $retorno=false;
+
+        foreach ($lista as $key => $i) {
+            
+            if($i->id==$id)
+            {
+                $retorno =true;
+                continue;
+            }
+            array_push($nuevaLista,$i);
+        }
+        if($retorno==true)
+        {
+            self::EscribirEnArchivoJSON($nuevaLista,$nombreArchivo);
+        }
+
+        return $retorno;
+    }
+
+    public static function BorrarUno(Request $request,Response $response,$args)
+    {
+        $recibo=$request->getParsedBody();
+        $id=$recibo["id"];
+        $nombreArchivo=$recibo["nombreArchivo"];
+        $retorno=new stdClass();        
+
+        if(self::BorrarUnoJson($id,$nombreArchivo))
+        {
+            $retorno->exito=true;
+            $retorno->mensaje="Se a eliminado exitosamente";
+            $retorno->status=200;
+        }
+        else 
+        {
+            
+            $retorno->status=400;
+            $retorno->exito=false;
+            $retorno->mensaje="No se a podido eliminar";
+        }
+
+        return $response->withJson($retorno,$retorno->status);
+    }
+
+    public static function ModificarEnArchivoJSON($nombreArchivo,$elemento)    
+    {
+        $lista=self::TraerTelefonosJSON($nombreArchivo);
+        $nuevaLista=array();
+        $retorno=false;
+
+        foreach ($lista as $key => $i) {
+            
+            if($i->id==$elemento->id)
+            {
+                $retorno=true;
+                array_push($nuevaLista,$elemento);    
+                continue;
+            }
+            array_push($nuevaLista,$i);
+        }
+        if($retorno==true)
+        {
+            self::EscribirEnArchivoJSON($nuevaLista,$nombreArchivo);
+        }
+
+        return $retorno;
+
+
+
+
+    }
+
+
+    public static function ModificarUno(Request $request,Response $response,$args)
+    {
+        $recibo=$request->getParsedBody();
+        $json=json_decode($recibo["cadenaJson"]);
+        $nombreArchivo=$recibo["nombreArchivo"];
+        $retorno= new stdClass();
+     // $json=self::ValidarCamposVacios($json);
+
+        if(self::ModificarEnArchivoJSON($nombreArchivo,$json))
+        {
+            $retorno->exito=true;
+            $retorno->status=200;
+            $retorno->mensaje="Se a modificado exitosamente!!!";
+        }
+        else
+        {
+        
+            $retorno->exito=false;
+            $retorno->status=400;
+            $retorno->mensaje="No se a podido modificar";
+        }
+
+        return $response->withJson($retorno,$retorno->status);
+    }
+
+
+
 
    
 
