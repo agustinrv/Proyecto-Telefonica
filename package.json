@@ -1,0 +1,22 @@
+{
+  "name": "proyecto-telefonica",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agustinrv/Proyecto-Telefonica.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agustinrv/Proyecto-Telefonica/issues"
+  },
+  "homepage": "https://github.com/agustinrv/Proyecto-Telefonica#readme",
+  "dependencies": {
+    "@types/jquery": "^3.5.5"
+  }
+}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Territorio X</title>
+
+     
+   <!-- CSS only -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <!-- JS, Popper.js, and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+  <!--para iconos-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="dia.js"></script>
+
+</head>
+
+<header>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top"> <!--bg-dark-->
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav">
+  
+            <li class="dropdown dropdown">
+              <a class="nav-link text-primary"   id="navbardrop" href="Territorios.html">
+                Territorios<b class="caret"></b>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </nav>
+    </div>
+  
+</header>
+<!--rgb(247, 206, 203) rgb(219, 162, 96)-->
+<!-- public $id;
+    public $nombreCompleto;
+    public $numero;
+    public $territorio;
+    public $direccion;
+    public $estado; //Revisita,No llamar,Se puede
+    public $esNegocio;//bool-->
+
+<body class="bg-info" onload="CargarTabla()">
+
+    <div class="container-fluid">
+
+      <section class="row">
+
+        <section class="col-sm-12 col-md-12 col-lg-5 col-xl-4">
+            <div class="container mt-5" >
+                <h1 style="padding-top: 2%;">Telefonos</h1>
+
+                <form  class="form-control h-100 " style=" background-color: lightgrey;">
+                    <div class="row m-2">
+                        <section class="col-1">
+                            
+                                <div class="form-row ">
+                                    <div class="col-form-label"><label for="txtNombre" class="h6">Nombre:</label></div>
+                                </div>
+
+                                <div class="form-row ">
+                                  <div class="col-form-label"><label for="txtNumero" class="h6">Numero:</label></div>
+                                </div>
+
+                                <div class="form-row ">
+                                    <div class="col-form-label mt-1"><label for="txtDireccion" class="h6">Direccion:</label></div>
+                                  </div>
+
+                                <div class="form-row ">
+                                    <div class="col-form-label mt-1"><label for="cboEstado" class="h6">Estado:</label></div>
+                                </div>                                                                               
+
+                                <div class="form-row  ">
+                                  <div class="col-form-label"><label for="cboTipo" class="h6">Tipo:</label></div><!--Cambiar por algo que pregunte que es.Ej: cboBox opcion es negocio,es casa.TIPO??-->
+                                </div>
+
+                            </section>
+
+                            <section class="col ml-5 ">
+
+                                <div class="form-row ">
+                                    <div class="col input-group ">
+                                        <div class="input-group-text mb-2 "><label for="txtNombre" class="fas fa-user"></label></div>
+                                        <input type="text" id="txtNombre" class="form-control " required placeholder="Nombre Completo">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col input-group mb-2 ">
+                                        <label for="txtNumero" class="fas fa-phone input-group-text" ></label>
+                                        <input type="tel" id="txtNumero" class="form-control" placeholder="Numero de Telefono">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col input-group mb-2 ">
+                                        <label for="txtDireccion" class="fas fa-home input-group-text"></label>
+                                        <input type="text" id="txtDireccion" class="form-control" min="0" placeholder="Direccion">
+                                    </div> 
+                                </div>
+
+                                
+                                <div class="form-row pl-1 pr-1">
+                                    <div class="input-group mb-2">
+                                        <label for="cboEstado" class="fas fa-user-graduate input-group-text"></label>
+                                        <select name="" id="cboEstado" class="form-control" required >
+                                            <option value="---" disabled selected>Seleccione un Estado</option>
+                                            <option value="Se Puede">Se Puede</option>
+                                            <option value="Revisita">Revisita</option>
+                                            <option value="No Llamar">No Llamar</option>
+                                        </select> 
+                                    </div>
+                                </div>
+                                    
+
+                                <div class="form-row pl-1 pr-1">
+                                    <div class="input-group mb-2">
+                                        <label for="cboTipo" class="fas fa-building input-group-text"></label>
+                                        <select name="" id="cboTipo" class="form-control" required>
+                                            <option value="---" disabled  selected>Seleccione un Tipo</option>
+                                            <option value="Casa">Casa</option>
+                                            <option value="Edificio">Edificio</option>
+                                            <option value="Negocio">Negocio</option>
+                                        </select> 
+                                    </div>
+                                </div>
+                        
+                                
+                            </section>
+                     </div>
+                        
+             
+
+                      <div class="form-row form-group">
+                          <div class="col"><input type="button" value="Agregar" class="btn btn-success btn-block"  id="btnAgregar"  onclick="Agregar()"></div>
+                          <div class="col"><input type="reset" value="Limpiar" class="btn btn-warning btn-block"></div>
+                      </div>
+     
+            </form>
+
+                </div>
+                    <div id="divAlert" style="padding-top: 3%;"></div>
+                    
+                </div>
+
+        </section>
+
+          <div class="col-sm-12 col-md-12 col-lg col-xl-8 ">
+            <div class="container mt-5">
+      
+              <div id="tablaMes" ></div>
+            
+            </div>
+          </div>
+      
+      </section>
+
+    </div>
+
+
+    
+  
+  
+</body>
+</html>
