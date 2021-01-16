@@ -1,9 +1,10 @@
-{"id":16,"nombre":"Santiago aguado","numero":"42422323","direccion":"galigniana 1148"}
-{"nombre":"melanie","numero":42422323,"territorio":"5b","direccion":"galigniana 1148","id":22}
-{"nombre":"Jazmin Siles","numero":42422323,"territorio":"5b","direccion":"galigniana 1148","id":23}
-{"nombre":"Jazmin Siles","numero":"4242-2323","territorio":"5b","direccion":"galigniana 1148","id":24}
-{"nombre":"Agustin rivola","numero":"4242-2323","territorio":"5b","direccion":"galigniana 1148","id":25,"Estado":"No Llamar","negocio":false}
-{"nombre":"Karen Peliquero","numero":"4040-2222","direccion":"falsa 123","estado":"Se Puede","categoria":"Casa","id":26}
-{"nombre":"Karen Peliquero","numero":"4040-2222","direccion":"falsa 123","estado":"Se Puede","categoria":"Casa","id":27}
-{"id":28,"nombre":"Constanza Guerrero","numero":"4141-2323","direccion":"falsa 124"}
-{"nombre":"Elizabeth Yanten","numero":"2020-3030","direccion":"avellaneda","estado":"No Llamar","categoria":"Negocio","id":29}
+{"id":30,"nombre":"Pepe","numero":"2222-4444","direccion":"kakakjdjdjjd","estado":"No Llamar","categoria":"Negocio"}
+{"id":32,"nombre":"Zaira Martinez","numero":"2020-3232","direccion":"Cualquier girasol","estado":"Revisita","categoria":"Edificio"}
+{"nombre":"Santiago Aguado","numero":"4242-2323","direccion":"Gotham City","estado":"Revisita","categoria":"Edificio","id":33}
+{"nombre":"Alan Molina","numero":"3030-2828","direccion":"Coruscant","estado":"Se Puede","categoria":"Casa","id":34}
+{"id":36,"nombre":"Constanza Guerrero","numero":"4545-3030","direccion":"Perritos 123","estado":"Revisita","categoria":"Negocio"}
+{"id":37,"nombre":"Jazmin Siles","numero":"4160-6063","direccion":"Salon de Ezeiza","estado":"Se Puede","categoria":"Edificio"}
+{"nombre":"Orne Alavar","numero":"4245-3030","direccion":"New York","estado":"Se Puede","categoria":"Casa","id":39}
+{"nombre":"Debi Quintans","numero":"4545-2020","direccion":"La Playa","estado":"Se Puede","categoria":"Casa","id":40}
+{"nombre":"Karen Peliquero","numero":"3030-2564","direccion":"Salta","estado":"Se Puede","categoria":"Casa","id":41}
+{"nombre":"Agustin Rivola","numero":"4568-3030","direccion":"Su casa","estado":"No Llamar","categoria":"Casa","id":42}

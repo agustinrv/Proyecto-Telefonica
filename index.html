@@ -47,49 +47,45 @@
     </div>
   
 </header>
-<!--rgb(247, 206, 203) rgb(219, 162, 96)-->
-<!-- public $id;
-    public $nombreCompleto;
-    public $numero;
-    public $territorio;
-    public $direccion;
-    public $estado; //Revisita,No llamar,Se puede
-    public $esNegocio;//bool-->
 
-<body style="background-color:darkslateblue ;" onload="CargarTabla()" >
+<body  style="background-color:darkslateblue ;" onload="CargarTabla()">
 
-    <div class="container-fluid">
+    <section class="container-fluid">
 
-      <section class="row">
+        <section class="row">
 
-        <section class="col-sm-12 col-md-12 col-lg-5 col-xl-4">
-            <div class="container mt-5" >
-                <h1 style="padding-top: 2%;" class="text-white">Telefonos</h1>
+            <section class="col-sm-12 col-md-12 col-lg-5 col-xl-4">
 
-                <form  class="form-control h-100 bg-dark border-dark">
-                    <div class="row m-2">
-                        <section class="col-1">
-                            
-                                <div class="form-row ">
-                                    <div class="col-form-label"><label for="txtNombre" class="h6">Nombre:</label></div>
-                                </div>
+                <div class="container mt-5">
 
-                                <div class="form-row ">
-                                  <div class="col-form-label"><label for="txtNumero" class="h6">Numero:</label></div>
-                                </div>
+                    <h1 style="padding-top: 2%;" class="text-white">Telefonos</h1>
 
-                                <div class="form-row ">
-                                    <div class="col-form-label mt-1"><label for="txtDireccion" class="h6">Direccion:</label></div>
-                                  </div>
+                    <form class="form-control h-100 bg-dark border-dark">
+                        
+                        <section class="row m-2">
 
-                                <div class="form-row ">
-                                    <div class="col-form-label mt-1"><label for="cboEstado" class="h6">Estado:</label></div>
-                                </div>                                                                               
-
-                                <div class="form-row  ">
-                                  <div class="col-form-label"><label for="cboCategoria" class="h6">Categoria:</label></div><!--Cambiar por algo que pregunte que es.Ej: cboBox opcion es negocio,es casa.TIPO??-->
-                                </div>
-
+                            <section class="col-1">
+                                
+                                    <div class="form-row ">
+                                        <div class="col-form-label"><label for="txtNombre" class="h6">Nombre:</label></div>
+                                    </div>
+    
+                                    <div class="form-row ">
+                                      <div class="col-form-label"><label for="txtNumero" class="h6">Numero:</label></div>
+                                    </div>
+    
+                                    <div class="form-row ">
+                                        <div class="col-form-label mt-1"><label for="txtDireccion" class="h6">Direccion:</label></div>
+                                      </div>
+    
+                                    <div class="form-row ">
+                                        <div class="col-form-label mt-1"><label for="cboEstado" class="h6">Estado:</label></div>
+                                    </div>                                                                               
+    
+                                    <div class="form-row  ">
+                                      <div class="col-form-label"><label for="cboCategoria" class="h6">Categoria:</label></div>
+                                    </div>
+    
                             </section>
 
                             <section class="col ml-5 ">
@@ -143,39 +139,43 @@
                         
                                 
                             </section>
-                     </div>
-                        
-             
 
-                      <div class="form-row form-group">
-                          <div class="col"><input type="button" value="Agregar" class="btn btn-success btn-block"  id="btnAgregar"  onclick="Agregar()"></div>
-                          <div class="col"><input type="reset" value="Limpiar" class="btn btn-warning btn-block"></div>
-                      </div>
-     
-            </form>
 
-                </div>
+                        </section>
+
+                        <div class="form-row form-group">
+                            <div class="col"><input type="button" value="Agregar" class="btn btn-success btn-block"  id="btnAgregar"  onclick="Agregar()"></div>
+                            <div class="col"><input type="reset" value="Limpiar" class="btn btn-warning btn-block"></div>
+                        </div>
+
+                    </form>
+
                     <div id="divAlert" style="padding-top: 3%;"></div>
-                    
+
+
                 </div>
+
+
+            </section>
+
+
+            <section class="col-sm-12 col-md-12 col-lg col-xl ">
+                <div class="container mt-5">
+          
+                  <div id="tablaTel" ></div>
+                
+                </div>
+              </section>
+
+
 
         </section>
 
-          <div class="col-sm-12 col-md-12 col-lg col-xl-8 ">
-            <div class="container mt-5">
-      
-              <div id="tablaTel" ></div>
-            
-            </div>
-          </div>
-      
-      </section>
 
-    </div>
+    </section>
 
 
-    
-  
-  
+
+
+
 </body>
-</html>

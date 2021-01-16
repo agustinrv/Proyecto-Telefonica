@@ -1,10 +1,6 @@
 ///<reference path="node_modules/@types/jquery/index.d.ts" />
 ///<reference path="./genericas.ts" />
 
-
-
-
-
 function Agregar()
 {
     let tel:any={};
@@ -76,22 +72,20 @@ function CargarTabla()
             {
                 let fila=0;
                 let listaTelefonos=respuesta.listaTelefonos;
-                let total:any={};
+                let total=CalcularTotales(listaTelefonos);
 
-                total.telefonos=listaTelefonos.length;
-                total.nombre=0;
-                total.numero=0;
-                total.direccion=0;
-                total.estado=0;
-                total.categoria=0;
+               
+                
+
+
                 let archivo= "prueba" //localStorage.getItem("nombreArchivo");
                 
-                let html='<h1 style="padding-top: 2%;">'+ archivo +'</h1> ';
+                let html='<h1 class="text-white">'+ archivo +'</h1> ';
                 html+='<div class="table-responsive">';
                 html+='<table class="table table-sm table-dark table-hover">';
                 html+='<tr><th></th><th>Nº</th><th class="text-center">Nombre</th><th class="text-center">Numero</th><th class="text-center">Direccion</th>';
                 html+='<th class="text-center">Estado</th><th class="text-center">Categoria</th>';
-                html+='<th class="text-center">Modificar</th><th class="text-center">Eliminar</th></tr>';
+                html+='<th class="pl-3">Modificar</th><th class="pl-3">Eliminar</th></tr>';
                 listaTelefonos.forEach(element => {
                     fila++;
                     total.nombre+=parseInt(element.nombre);
@@ -107,14 +101,14 @@ function CargarTabla()
                     html+='<td><input type="button" value="Eliminar" class="btn btn-danger" onclick="Eliminar('+element.id+","+fila+')"></td></tr>';
                 });
                 
-                html+='<tr><td>Total:</td><td class="text-left" colspan="2">'+total.telefonos+' telefonos</td>';
-                html+='<td class="text-center">'+total.estado+'</td></tr></table></div>';            
-                //html+='<input type="button" value="Generar Informe" class="btn btn-primary" id="btnInforme">';
-                //html+='<div id="divInforme" class="mt-2"></div>';
+                html+='<tr><td>Total:</td><td class="text-left pl-3" colspan="2">'+total.telefonos+' telefonos</td></tr></table></div>';
+            
+                html+="<input type='button' value='Generar Informe' class='btn btn-primary' id='btnInforme' onclick='GenerarInforme("+JSON.stringify(total)+")'>";
+                html+='<div id="divInforme" class="mt-2"></div>';
 
                 $("#tablaTel").html(html);
-               // $("#btnInforme").attr("onclick","GenerarInforme("+JSON.stringify(total)+")");
-                //GenerarInforme(total);
+               
+                
 
 
 
@@ -128,35 +122,72 @@ function CargarTabla()
     });
     
 }
+
+function CalcularTotales(listaTelefonos:any)
+{
+    let total:any={};
+    total.telefonos=listaTelefonos.length;
+    total.casas=0;
+    total.edificios=0;
+    total.negocios=0;
+    total.sePuede=0;
+    total.noLlamar=0;
+    total.revisitas=0;
+
+   ///Categoria
+
+    let categorias=listaTelefonos.map(function(value,index,array){
+        return value.categoria;
+    })
+
+    total.casas=categorias.filter(function(value:string,index,array){
+        return value.toLowerCase()=="casa";
+    }).length;
+
+    total.edificios=categorias.filter(function(value:string,index,array){
+        return value.toLowerCase()=="edificio";
+    }).length;
+
+    total.negocios=categorias.filter(function(value:string,index,array){
+        return value.toLowerCase()=="negocio";
+    }).length
+
+///Estado
+    let estados=listaTelefonos.map(function(value,index,array){
+        return value.estado;
+    })
+
+    total.sePuede=estados.filter(function(value:string,index,array){
+        return value.toLowerCase()=="se puede";
+    }).length
+
+    total.noLlamar=estados.filter(function(value:string,index,array){
+        return value.toLowerCase()=="no llamar";
+    }).length
+
+    total.revisitas=estados.filter(function(value:string,index,array){
+        return value.toLowerCase()=="revisita";
+    }).length
+
+    
+    return total;
+}
+
 function GenerarInforme(total)
 {
    // total=JSON.parse(total);
-   console.log(total);
-    total.minutos=total.horas.split(":")[1];
-    total.horas=total.horas.split(":")[0];
-
-    if(total.minutos=="00")
-    {
-        AlertInforme("<strong>Informe: </strong>"+"</br>"+
-        "nombre: " +  total.nombre + "</br>"+
-        "numero: " + total.numero + "</br>"+
-        "Horas: " + total.horas + "</br>"+
-        "direccion: " + total.direccion + "</br>"+
-        "estado: " + total.estado);
-    }
-    else
-    {
-        AlertInforme("<strong>Informe: </strong>"+"</br>"+
-        "nombre: " +  total.nombre + "</br>"+
-        "numero: " + total.numero + "</br>"+
-        "Horas: " + total.horas + "</br>"+
-        "direccion: " + total.direccion + "</br>"+
-        "estado: " + total.estado+"</br>"+"</br>"+
-        "Le han sobrado "+total.minutos + "min.");
-    }
+    console.log(total);
     
-                
-
+    
+    AlertInforme("<strong>Informe: </strong>"+"</br>"+
+    "Total de Numeros: " +  total.telefonos + "</br>"+
+    "Total de Casas: " + total.casas + "</br>"+
+    "Total de Edificios: " + total.edificios + "</br>"+
+    "Total de Negocios: " + total.negocios + "</br>"+
+    "Total de Numeros que se pueden llamar: " + total.sePuede+"</br>"+//"total de 'se puede' "
+    "Total de No Llamar: "+total.noLlamar + "</br>"+
+    "Total de Revisitas: "+total.revisitas + "</br>"+ "</br>");
+     
     
 }
 
@@ -193,14 +224,19 @@ function Eliminar(id,fila)
 
 function Modificar(id)
 {
-    let tel:any={};
     let pagina="BACKEND/telefono/modificar";
+    let tel:any={};
+
     tel.id=id;
     tel.nombre=$("#txtNombre").val();
     tel.numero=$("#txtNumero").val();
-    tel.horas=$("#txtHoras").val();
     tel.direccion=$("#txtDireccion").val();
-    tel.estado=$("#txtEstado").val();
+    tel.estado=$("#cboEstado").val();
+    tel.categoria=$("#cboCategoria").val();
+  
+
+
+
     let archivo="prueba";//localStorage.getItem("nombreArchivo");
     
 //    if(AdministrarValidaciones(tel))
@@ -220,7 +256,6 @@ function Modificar(id)
             CargarTabla();
             ArmarAgregar();
         }).fail(function(jqxhr){
-            console.log(jqxhr.responseText);
             let respuesta=JSON.parse(jqxhr.responseText);
             AlertDanger(respuesta.mensaje);
 
