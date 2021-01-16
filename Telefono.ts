@@ -7,22 +7,23 @@
 
 function Agregar()
 {
-    let dia:any={};
-    let pagina="BACKEND/dia/agregar";
-    dia.fecha=$("#dateFecha").val();
-    dia.publicaciones=$("#txtPublicaciones").val();
-    dia.videos=$("#txtVideos").val();
-    dia.horas=$("#txtHoras").val();
-    dia.revisitas=$("#txtRevisitas").val();
-    dia.estudios=$("#txtEstudios").val();
+    let tel:any={};
+    let pagina="BACKEND/telefono/agregar";
+
+    tel.nombre=$("#txtNombre").val();
+    tel.numero=$("#txtNumero").val();
+    tel.direccion=$("#txtDireccion").val();
+    tel.estado=$("#cboEstado").val();
+    tel.categoria=$("#cboCategoria").val();
+    
 
     
-    if(AdministrarValidaciones(dia))
+   // if(AdministrarValidaciones(tel))
     {
-        let nombreArchivo=localStorage.getItem("nombreArchivo");
+        //let nombreArchivo=localStorage.getItem("nombreArchivo");
         let form = new FormData();
-        form.append("cadenaJson",JSON.stringify(dia));
-        form.append("nombreArchivo",nombreArchivo);
+        form.append("cadenaJson",JSON.stringify(tel));
+        form.append("nombreArchivo","prueba");
 
         $.ajax({
             url:pagina,
@@ -52,9 +53,9 @@ function Agregar()
 
 function CargarTabla()
 {
-    let nombreArchivo=localStorage.getItem("nombreArchivo");
+    let nombreArchivo="prueba";//localStorage.getItem("nombreArchivo");
 
-    let pagina="BACKEND/dia/traerTodos/" + nombreArchivo;
+    let pagina="BACKEND/telefono/traerTodos/" + nombreArchivo;
     
     $.ajax({
         url:pagina,
@@ -67,53 +68,52 @@ function CargarTabla()
         
         if(respuesta.exito)
         {
-            if(respuesta.listaDias==false)
+            if(respuesta.listaTelefonos==false)
             {
                 AlertWarning(respuesta.mensaje)
             }
             else
             {
                 let fila=0;
-                let listaDias=respuesta.listaDias;
+                let listaTelefonos=respuesta.listaTelefonos;
                 let total:any={};
-                let arrayHoras=Array();
 
-                total.dias=listaDias.length;
-                total.publicaciones=0;
-                total.videos=0;
-                total.revisitas=0;
-                total.estudios=0;
-                let archivo= localStorage.getItem("nombreArchivo");
+                total.telefonos=listaTelefonos.length;
+                total.nombre=0;
+                total.numero=0;
+                total.direccion=0;
+                total.estado=0;
+                total.categoria=0;
+                let archivo= "prueba" //localStorage.getItem("nombreArchivo");
                 
                 let html='<h1 style="padding-top: 2%;">'+ archivo +'</h1> ';
                 html+='<div class="table-responsive">';
                 html+='<table class="table table-sm table-dark table-hover">';
-                html+='<tr><th></th><th>Nº</th><th class="text-center">Fecha</th><th class="text-center">Publicaciones</th><th class="text-center">Videos</th><th class="text-center">Horas</th>';
-                html+='<th class="text-center">Revisitas</th><th class="text-center">Estudios</th><th>Modificar</th><th>Eliminar</th></tr>';
-                listaDias.forEach(element => {
+                html+='<tr><th></th><th>Nº</th><th class="text-center">Nombre</th><th class="text-center">Numero</th><th class="text-center">Direccion</th>';
+                html+='<th class="text-center">Estado</th><th class="text-center">Categoria</th>';
+                html+='<th class="text-center">Modificar</th><th class="text-center">Eliminar</th></tr>';
+                listaTelefonos.forEach(element => {
                     fila++;
-                    total.publicaciones+=parseInt(element.publicaciones);
-                    total.videos+=parseInt(element.videos);
-                    arrayHoras.push(element.horas);
-                    total.revisitas+=parseInt(element.revisitas);
-                    total.estudios+=parseInt(element.estudios);
+                    total.nombre+=parseInt(element.nombre);
+                    total.numero+=parseInt(element.numero);
+                    total.direccion+=parseInt(element.direccion);
+                    total.estado+=parseInt(element.estado);
 
-                    html+='<tr onclick="SeleccionarFilaPrimary('+fila+","+total.dias+')" id="fila-'+fila+'" ><td></td>';
-                    html+='<td class="text-center">'+fila+'</td><td class="text-center">'+element.fecha+'</td>'+'<td class="text-center">'+element.publicaciones+'</td>';
-                    html+='<td class="text-center">'+element.videos+'</td>'+'<td class="text-center">'+element.horas+'</td>';
-                    html+='<td class="text-center">'+element.revisitas+'</td><td class="text-center">'+element.estudios+'</td>';    
+                    html+='<tr onclick="SeleccionarFilaPrimary('+fila+","+total.telefonos+')" id="fila-'+fila+'" ><td></td>';
+                    html+='<td class="text-center">'+fila+'</td><td class="text-center">'+element.nombre+'</td>'+'<td class="text-center">'+element.numero+'</td>';
+                    html+='<td class="text-center">'+element.direccion+'</td>'+'<td class="text-center">'+element.estado+'</td>';
+                    html+='<td class="text-center">'+element.categoria+'</td>';
                     html+="<td><input type='button' value='Modificar' class='btn btn-warning' onclick='ArmarModificar("+JSON.stringify(element) +","+fila+")'></td>";
                     html+='<td><input type="button" value="Eliminar" class="btn btn-danger" onclick="Eliminar('+element.id+","+fila+')"></td></tr>';
                 });
-                total.horas=CalcularTotalHoras(arrayHoras);
-                html+='<tr><td>Total:</td><td class="text-left" colspan="2">'+total.dias+' Dias</td><td class="text-center">'+total.publicaciones+'</td>';
-                html+='<td class="text-center">'+total.videos+'</td><td class="text-center">'+total.horas+'</td>';
-                html+='<td class="text-center">'+total.revisitas+'</td><td class="text-center">'+total.estudios+'</td></tr></table></div>';            
-                html+='<input type="button" value="Generar Informe" class="btn btn-primary" id="btnInforme">';
-                html+='<div id="divInforme" class="mt-2"></div>';
+                
+                html+='<tr><td>Total:</td><td class="text-left" colspan="2">'+total.telefonos+' telefonos</td>';
+                html+='<td class="text-center">'+total.estado+'</td></tr></table></div>';            
+                //html+='<input type="button" value="Generar Informe" class="btn btn-primary" id="btnInforme">';
+                //html+='<div id="divInforme" class="mt-2"></div>';
 
-                $("#tablaMes").html(html);
-                $("#btnInforme").attr("onclick","GenerarInforme("+JSON.stringify(total)+")");
+                $("#tablaTel").html(html);
+               // $("#btnInforme").attr("onclick","GenerarInforme("+JSON.stringify(total)+")");
                 //GenerarInforme(total);
 
 
@@ -138,20 +138,20 @@ function GenerarInforme(total)
     if(total.minutos=="00")
     {
         AlertInforme("<strong>Informe: </strong>"+"</br>"+
-        "Publicaciones: " +  total.publicaciones + "</br>"+
-        "Videos: " + total.videos + "</br>"+
+        "nombre: " +  total.nombre + "</br>"+
+        "numero: " + total.numero + "</br>"+
         "Horas: " + total.horas + "</br>"+
-        "Revisitas: " + total.revisitas + "</br>"+
-        "Estudios: " + total.estudios);
+        "direccion: " + total.direccion + "</br>"+
+        "estado: " + total.estado);
     }
     else
     {
         AlertInforme("<strong>Informe: </strong>"+"</br>"+
-        "Publicaciones: " +  total.publicaciones + "</br>"+
-        "Videos: " + total.videos + "</br>"+
+        "nombre: " +  total.nombre + "</br>"+
+        "numero: " + total.numero + "</br>"+
         "Horas: " + total.horas + "</br>"+
-        "Revisitas: " + total.revisitas + "</br>"+
-        "Estudios: " + total.estudios+"</br>"+"</br>"+
+        "direccion: " + total.direccion + "</br>"+
+        "estado: " + total.estado+"</br>"+"</br>"+
         "Le han sobrado "+total.minutos + "min.");
     }
     
@@ -161,53 +161,21 @@ function GenerarInforme(total)
 }
 
 
-function CalcularTotalHoras(arrayHoras)
-{
-    let aux=new Date();
-        aux.setHours(0,0);
-    let horas=0;
-    let minutos=0;
-    let retorno="00:00";
-
-    horas=arrayHoras.map(function(element,index,array){
-        return parseInt(element.split(":")[0]);
-    }).reduce(function(anterior,siguiente,index,array){
-        return anterior+ siguiente;
-    });
-
-    minutos=arrayHoras.map(function(element,index,array){
-        return parseInt(element.split(":")[1]);
-    }).reduce(function(anterior,siguiente,index,array){
-        return anterior+ siguiente;
-    });
-
-    aux.setMinutes(minutos);
-    if(aux.getMinutes().toString().length==1)
-    {
-        retorno=horas+aux.getHours() + ":0" + aux.getMinutes();
-    }
-    else
-    {
-        retorno=horas+aux.getHours() + ":" + aux.getMinutes();
-    }
-
-    return retorno;
-}
 
 
 //Cambiar confirm por ventana Modal
 
 function Eliminar(id,fila)
 {
-    let pagina="BACKEND/dia/borrar";
+    let pagina="BACKEND/telefono/borrar";
 
     if(confirm("Desea eliminar la fila nº" + fila))
     {
-        let archivo= localStorage.getItem("nombreArchivo");
+        let archivo= "prueba"//localStorage.getItem("nombreArchivo");
         $.ajax({
             url:pagina,
             type:"delete",
-            data:{"id":id,"archivo":archivo},
+            data:{"id":id,"nombreArchivo":archivo},
             dataType:"json",
             async:true
         }).done(function(resultado){
@@ -225,20 +193,19 @@ function Eliminar(id,fila)
 
 function Modificar(id)
 {
-    let dia:any={};
-    let pagina="BACKEND/dia/modificar";
-    dia.id=id;
-    dia.fecha=$("#dateFecha").val();
-    dia.publicaciones=$("#txtPublicaciones").val();
-    dia.videos=$("#txtVideos").val();
-    dia.horas=$("#txtHoras").val();
-    dia.revisitas=$("#txtRevisitas").val();
-    dia.estudios=$("#txtEstudios").val();
-    dia.archivo=localStorage.getItem("nombreArchivo");
+    let tel:any={};
+    let pagina="BACKEND/telefono/modificar";
+    tel.id=id;
+    tel.nombre=$("#txtNombre").val();
+    tel.numero=$("#txtNumero").val();
+    tel.horas=$("#txtHoras").val();
+    tel.direccion=$("#txtDireccion").val();
+    tel.estado=$("#txtEstado").val();
+    let archivo="prueba";//localStorage.getItem("nombreArchivo");
     
-    if(AdministrarValidaciones(dia))
+//    if(AdministrarValidaciones(tel))
     {
-        let json={"cadenaJson":dia}
+        let json={"cadenaJson":JSON.stringify(tel),"nombreArchivo":archivo};
         
         $.ajax({
             url:pagina,
@@ -253,6 +220,7 @@ function Modificar(id)
             CargarTabla();
             ArmarAgregar();
         }).fail(function(jqxhr){
+            console.log(jqxhr.responseText);
             let respuesta=JSON.parse(jqxhr.responseText);
             AlertDanger(respuesta.mensaje);
 
@@ -264,35 +232,34 @@ function Modificar(id)
 
 function ArmarAgregar()
 {    
-    $("#dateFecha").val("");
-    $("#txtPublicaciones").val("");
-    $("#txtVideos").val("");
-    $("#txtHoras").val("00:00");
-    $("#txtRevisitas").val("");
-    $("#txtEstudios").val("");
+
+    $("#txtNombre").val("");
+    $("#txtNumero").val("");
+    $("#txtDireccion").val("");
+    $("#cboEstado").val("");
+    $("#cboCategoria").val("");
     $("#btnAgregar").val("Agregar");
     $("#btnAgregar").attr("onclick","Agregar()");
 }
 
 function ArmarModificar(elemento,fila)
 { 
-    $("#dateFecha").val(elemento.fecha);
-    $("#txtPublicaciones").val(elemento.publicaciones);
-    $("#txtVideos").val(elemento.videos);
-    $("#txtHoras").val(elemento.horas);
-    $("#txtRevisitas").val(elemento.revisitas);
-    $("#txtEstudios").val(elemento.estudios);
+    $("#txtNombre").val(elemento.nombre);
+    $("#txtNumero").val(elemento.numero);
+    $("#txtDireccion").val(elemento.direccion);
+    $("#cboEstado").val(elemento.estado);
+    $("#cboCategoria").val(elemento.categoria);
     $("#btnAgregar").val("Modificar");
     $("#btnAgregar").attr("onclick","Modificar("+elemento.id+")");
     AlertWarning("<strong>Cuidado!!!</strong> Fila nº "+fila+" seleccionada para modificar");
 }
-
-function AdministrarValidaciones(dia)
+/*
+function AdministrarValidaciones(tel)
 {
     let flagHoras=true;
     let retorno=false;
 
-    if(dia.horas.length==0 || dia.horas=="00:00")
+    if(tel.numero.length==0  || tel.horas=="00:00")
     {
         flagHoras=false;
     }
@@ -309,3 +276,4 @@ function AdministrarValidaciones(dia)
     return retorno;
 }
 
+*/

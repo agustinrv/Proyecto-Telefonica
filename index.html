@@ -17,7 +17,11 @@
   <!--para iconos-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="dia.js"></script>
+  <script src="telefono.js"></script>
+
+  <style>
+    label{ color: white;}
+  </style>
 
 </head>
 
@@ -52,7 +56,7 @@
     public $estado; //Revisita,No llamar,Se puede
     public $esNegocio;//bool-->
 
-<body class="bg-info" onload="CargarTabla()">
+<body style="background-color:darkslateblue ;" onload="CargarTabla()" >
 
     <div class="container-fluid">
 
@@ -60,9 +64,9 @@
 
         <section class="col-sm-12 col-md-12 col-lg-5 col-xl-4">
             <div class="container mt-5" >
-                <h1 style="padding-top: 2%;">Telefonos</h1>
+                <h1 style="padding-top: 2%;" class="text-white">Telefonos</h1>
 
-                <form  class="form-control h-100 " style=" background-color: lightgrey;">
+                <form  class="form-control h-100 bg-dark border-dark">
                     <div class="row m-2">
                         <section class="col-1">
                             
@@ -83,7 +87,7 @@
                                 </div>                                                                               
 
                                 <div class="form-row  ">
-                                  <div class="col-form-label"><label for="cboTipo" class="h6">Tipo:</label></div><!--Cambiar por algo que pregunte que es.Ej: cboBox opcion es negocio,es casa.TIPO??-->
+                                  <div class="col-form-label"><label for="cboCategoria" class="h6">Categoria:</label></div><!--Cambiar por algo que pregunte que es.Ej: cboBox opcion es negocio,es casa.TIPO??-->
                                 </div>
 
                             </section>
@@ -91,23 +95,23 @@
                             <section class="col ml-5 ">
 
                                 <div class="form-row ">
-                                    <div class="col input-group ">
-                                        <div class="input-group-text mb-2 "><label for="txtNombre" class="fas fa-user"></label></div>
-                                        <input type="text" id="txtNombre" class="form-control " required placeholder="Nombre Completo">
+                                    <div class="col input-group mb-2">
+                                        <label for="txtNombre" class="fas fa-user input-group-text"></label>
+                                        <input type="text" id="txtNombre" class="form-control "  placeholder="Nombre Completo">
                                     </div>
                                 </div>
 
                                 <div class="form-row">
                                     <div class="col input-group mb-2 ">
                                         <label for="txtNumero" class="fas fa-phone input-group-text" ></label>
-                                        <input type="tel" id="txtNumero" class="form-control" placeholder="Numero de Telefono">
+                                        <input type="tel" id="txtNumero" required class="form-control" placeholder="Numero de Telefono">
                                     </div>
                                 </div>
 
                                 <div class="form-row">
                                     <div class="col input-group mb-2 ">
                                         <label for="txtDireccion" class="fas fa-home input-group-text"></label>
-                                        <input type="text" id="txtDireccion" class="form-control" min="0" placeholder="Direccion">
+                                        <input type="text" id="txtDireccion"  class="form-control" min="0" placeholder="Direccion">
                                     </div> 
                                 </div>
 
@@ -127,9 +131,9 @@
 
                                 <div class="form-row pl-1 pr-1">
                                     <div class="input-group mb-2">
-                                        <label for="cboTipo" class="fas fa-building input-group-text"></label>
-                                        <select name="" id="cboTipo" class="form-control" required>
-                                            <option value="---" disabled  selected>Seleccione un Tipo</option>
+                                        <label for="cboCategoria" class="fas fa-building input-group-text"></label>
+                                        <select name="" id="cboCategoria" class="form-control">
+                                            <option value="---" disabled  selected>Seleccione la Categoria</option>
                                             <option value="Casa">Casa</option>
                                             <option value="Edificio">Edificio</option>
                                             <option value="Negocio">Negocio</option>
@@ -160,7 +164,7 @@
           <div class="col-sm-12 col-md-12 col-lg col-xl-8 ">
             <div class="container mt-5">
       
-              <div id="tablaMes" ></div>
+              <div id="tablaTel" ></div>
             
             </div>
           </div>

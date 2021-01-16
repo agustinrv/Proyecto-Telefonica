@@ -47,7 +47,7 @@ class Telefono
     public static function GenerarID($nombreArchivo)
     {
         $lista=self::TraerTelefonosJSON($nombreArchivo);
-        var_dump($lista);
+        
         $lista=$lista;
         $retorno=1;
         if(!empty($lista))
