@@ -16,7 +16,7 @@ function CargarTabla()
     }).done(function(respuesta){
 
         let fila=0;       
-        let listaMeses=OrdenarPorID(respuesta,true);
+        //let listaMeses=OrdenarPorID(respuesta,true);
         let total:any={};
 
         total.meses=listaMeses.length;
