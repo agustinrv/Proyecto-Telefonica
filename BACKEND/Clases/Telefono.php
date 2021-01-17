@@ -11,7 +11,7 @@ class Telefono
     public $territorio;
     public $direccion;
     public $estado; //Revisita,No llamar,Se puede
-    public $esNegocio;//bool
+    public $categoria;//bool
     
 
     public function __construct($_nombreCompleto,$_numero,$_territorio,$_direccion){

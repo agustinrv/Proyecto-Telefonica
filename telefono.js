@@ -52,8 +52,7 @@ function Agregar() {
     tel.direccion = $("#txtDireccion").val();
     tel.estado = $("#cboEstado").val();
     tel.categoria = $("#cboCategoria").val();
-    // if(AdministrarValidaciones(tel))
-    {
+    if (AdministrarValidaciones(tel)) {
         //let nombreArchivo=localStorage.getItem("nombreArchivo");
         var form = new FormData();
         form.append("cadenaJson", JSON.stringify(tel));
@@ -101,7 +100,7 @@ function CargarTabla() {
                 var html_1 = '<h1 class="text-white">' + archivo + '</h1> ';
                 html_1 += '<div class="table-responsive">';
                 html_1 += '<table class="table table-sm table-dark table-hover">';
-                html_1 += '<tr><th></th><th>Nº</th><th class="text-center">Nombre</th><th class="text-center">Numero</th><th class="text-center">Direccion</th>';
+                html_1 += '<tr><th></th><th class="pl-4">Nº</th><th class="text-center">Nombre</th><th class="text-center">Numero</th><th class="text-center">Direccion</th>';
                 html_1 += '<th class="text-center">Estado</th><th class="text-center">Categoria</th>';
                 html_1 += '<th class="pl-3">Modificar</th><th class="pl-3">Eliminar</th></tr>';
                 listaTelefonos.forEach(function (element) {
@@ -206,8 +205,7 @@ function Modificar(id) {
     tel.estado = $("#cboEstado").val();
     tel.categoria = $("#cboCategoria").val();
     var archivo = "prueba"; //localStorage.getItem("nombreArchivo");
-    //    if(AdministrarValidaciones(tel))
-    {
+    if (AdministrarValidaciones(tel)) {
         var json = { "cadenaJson": JSON.stringify(tel), "nombreArchivo": archivo };
         $.ajax({
             url: pagina,
@@ -246,27 +244,44 @@ function ArmarModificar(elemento, fila) {
     $("#btnAgregar").attr("onclick", "Modificar(" + elemento.id + ")");
     AlertWarning("<strong>Cuidado!!!</strong> Fila nº " + fila + " seleccionada para modificar");
 }
-/*
-function AdministrarValidaciones(tel)
-{
-    let flagHoras=true;
-    let retorno=false;
-
-    if(tel.numero.length==0  || tel.horas=="00:00")
-    {
-        flagHoras=false;
+function AdministrarValidaciones(tel) {
+    var aux = "";
+    var mensaje = "";
+    var contador = 0;
+    var flagError = false;
+    var retorno = false;
+    if (tel.numero != null && tel.numero.length > 0) {
+        if (tel.nombre == null || tel.nombre.length == 0) {
+            aux += "El Nombre\n";
+            contador++;
+        }
+        if (tel.direccion == null || tel.direccion.length == 0) {
+            aux += "La Direccion\n";
+            contador++;
+        }
+        if (tel.estado == null || tel.estado.length == 0) {
+            aux += "El Estado\n";
+            contador++;
+        }
+        if (tel.categoria == null || tel.categoria.length == 0) {
+            aux += "La Categoria\n";
+            contador++;
+        }
+        if (contador > 1) {
+            mensaje += 'No se han ingresado:\n\n' + aux + '\n\nDesea continuar?\n\n(Se colocara "Desconocido" en los espacios vacios)';
+            flagError = true;
+        }
+        else {
+            mensaje += 'No se a ingresado:\n\n' + aux + '\n\nDesea continuar?\n\n(Se colocara "Desconocido" en el espacio vacio)';
+            flagError = true;
+        }
     }
-
-    if(!flagHoras)
-    {
-        AlertDanger('<strong>Error!!!</strong> El campo <strong>"Horas"</strong> es obligatorio');
+    else {
+        AlertDanger("<strong>Error!!!</strong> No se puede ingresar un Telefono sin numero");
+        retorno = false;
     }
-    else
-    {
-        retorno=true;
+    if (flagError) {
+        retorno = confirm(mensaje);
     }
-
     return retorno;
 }
-
-*/ 

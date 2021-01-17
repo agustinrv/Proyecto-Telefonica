@@ -14,7 +14,7 @@ function Agregar()
     
 
     
-   // if(AdministrarValidaciones(tel))
+    if(AdministrarValidaciones(tel))
     {
         //let nombreArchivo=localStorage.getItem("nombreArchivo");
         let form = new FormData();
@@ -74,16 +74,12 @@ function CargarTabla()
                 let listaTelefonos=respuesta.listaTelefonos;
                 let total=CalcularTotales(listaTelefonos);
 
-               
-                
-
-
                 let archivo= "prueba" //localStorage.getItem("nombreArchivo");
                 
                 let html='<h1 class="text-white">'+ archivo +'</h1> ';
                 html+='<div class="table-responsive">';
                 html+='<table class="table table-sm table-dark table-hover">';
-                html+='<tr><th></th><th>Nº</th><th class="text-center">Nombre</th><th class="text-center">Numero</th><th class="text-center">Direccion</th>';
+                html+='<tr><th></th><th class="pl-4">Nº</th><th class="text-center">Nombre</th><th class="text-center">Numero</th><th class="text-center">Direccion</th>';
                 html+='<th class="text-center">Estado</th><th class="text-center">Categoria</th>';
                 html+='<th class="pl-3">Modificar</th><th class="pl-3">Eliminar</th></tr>';
                 listaTelefonos.forEach(element => {
@@ -239,7 +235,7 @@ function Modificar(id)
 
     let archivo="prueba";//localStorage.getItem("nombreArchivo");
     
-//    if(AdministrarValidaciones(tel))
+    if(AdministrarValidaciones(tel))
     {
         let json={"cadenaJson":JSON.stringify(tel),"nombreArchivo":archivo};
         
@@ -288,27 +284,67 @@ function ArmarModificar(elemento,fila)
     $("#btnAgregar").attr("onclick","Modificar("+elemento.id+")");
     AlertWarning("<strong>Cuidado!!!</strong> Fila nº "+fila+" seleccionada para modificar");
 }
-/*
+
 function AdministrarValidaciones(tel)
 {
-    let flagHoras=true;
+    let aux:string="";
+    let mensaje:string="";
+    let contador=0;
+    let flagError=false;
     let retorno=false;
 
-    if(tel.numero.length==0  || tel.horas=="00:00")
+    if(tel.numero !=null && tel.numero.length>0)
     {
-        flagHoras=false;
-    }
+        if(tel.nombre==null || tel.nombre.length==0 )
+        {
+            aux+="El Nombre\n";
+            contador++;
+        }
+        
+        if(tel.direccion==null || tel.direccion.length==0)
+        {
+            aux+="La Direccion\n";
+            contador++;
+            
+        }
+        if(tel.estado==null || tel.estado.length==0)
+        {
+            aux+="El Estado\n";
+            contador++
+            
+        }
+        if(tel.categoria==null || tel.categoria.length==0)
+        {
+            aux+="La Categoria\n";
+            contador++;
+            
+        }
 
-    if(!flagHoras)
-    {
-        AlertDanger('<strong>Error!!!</strong> El campo <strong>"Horas"</strong> es obligatorio');
+        if(contador>1)
+        {
+            mensaje+='No se han ingresado:\n\n' + aux + '\n\nDesea continuar?\n\n(Se colocara "Desconocido" en los espacios vacios)';
+            flagError=true;
+        }
+        else
+        {
+            mensaje+='No se a ingresado:\n\n' + aux + '\n\nDesea continuar?\n\n(Se colocara "Desconocido" en el espacio vacio)';
+            flagError=true;
+        }    
+     
+     
     }
     else
     {
-        retorno=true;
+        AlertDanger("<strong>Error!!!</strong> No se puede ingresar un Telefono sin numero");
+        retorno=false;
     }
+
+    if(flagError)
+    {
+        retorno=confirm(mensaje);
+    }
+
 
     return retorno;
 }
 
-*/
