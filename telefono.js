@@ -97,7 +97,7 @@ function CargarTabla() {
                 var listaTelefonos = respuesta.listaTelefonos;
                 var total_1 = CalcularTotales(listaTelefonos);
                 var archivo = "prueba"; //localStorage.getItem("nombreArchivo");
-                var html_1 = '<h1 class="text-white">' + archivo + '</h1> ';
+                var html_1 = '<h1 class="text-white pt-2"">' + archivo + '</h1> ';
                 html_1 += '<div class="table-responsive">';
                 html_1 += '<table class="table table-sm table-dark table-hover">';
                 html_1 += '<tr><th></th><th class="pl-4">Nº</th><th class="text-center">Nombre</th><th class="text-center">Numero</th><th class="text-center">Direccion</th>';
@@ -229,8 +229,8 @@ function ArmarAgregar() {
     $("#txtNombre").val("");
     $("#txtNumero").val("");
     $("#txtDireccion").val("");
-    $("#cboEstado").val("");
-    $("#cboCategoria").val("");
+    $("#cboEstado").val("---");
+    $("#cboCategoria").val("---");
     $("#btnAgregar").val("Agregar");
     $("#btnAgregar").attr("onclick", "Agregar()");
 }

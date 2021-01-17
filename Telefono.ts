@@ -76,7 +76,7 @@ function CargarTabla()
 
                 let archivo= "prueba" //localStorage.getItem("nombreArchivo");
                 
-                let html='<h1 class="text-white">'+ archivo +'</h1> ';
+                let html='<h1 class="text-white pt-2"">'+ archivo +'</h1> ';
                 html+='<div class="table-responsive">';
                 html+='<table class="table table-sm table-dark table-hover">';
                 html+='<tr><th></th><th class="pl-4">Nº</th><th class="text-center">Nombre</th><th class="text-center">Numero</th><th class="text-center">Direccion</th>';
@@ -267,8 +267,8 @@ function ArmarAgregar()
     $("#txtNombre").val("");
     $("#txtNumero").val("");
     $("#txtDireccion").val("");
-    $("#cboEstado").val("");
-    $("#cboCategoria").val("");
+    $("#cboEstado").val("---");
+    $("#cboCategoria").val("---");
     $("#btnAgregar").val("Agregar");
     $("#btnAgregar").attr("onclick","Agregar()");
 }

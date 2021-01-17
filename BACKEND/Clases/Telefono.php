@@ -76,6 +76,38 @@ class Telefono
         return $retorno;
     }
 
+    public static function ValidarCamposVacios($json)
+    {
+
+        if(empty($json->nombre))
+        {
+            $json->nombre="Desconocido";
+        }
+
+        if(empty($json->numero))
+        {
+            $json->numero="Desconocido";
+        }
+
+        if(empty($json->direccion))
+        {
+            $json->direccion="Desconocido";
+        }
+
+        if(empty($json->estado))
+        {
+            $json->estado="Desconocido";
+        } 
+
+        if(empty($json->categoria))
+        {
+            $json->categoria="Desconocido";
+        }
+        
+        return $json;
+    }
+
+
 
 
     public static function AgregarUno(Request $request,Response $response,$args)
@@ -88,7 +120,7 @@ class Telefono
         $json->id= self::GenerarID($nombreArchivo);
 
         $retorno= new stdClass();
-        //$json=self::ValidarCamposVacios($json);
+        $json=self::ValidarCamposVacios($json);
 
         if(self::AgregarEnArchivoJSON($nombreArchivo,$json))
         {
@@ -278,7 +310,7 @@ class Telefono
         $json=json_decode($recibo["cadenaJson"]);
         $nombreArchivo=$recibo["nombreArchivo"];
         $retorno= new stdClass();
-     // $json=self::ValidarCamposVacios($json);
+        $json=self::ValidarCamposVacios($json);
 
         if(self::ModificarEnArchivoJSON($nombreArchivo,$json))
         {

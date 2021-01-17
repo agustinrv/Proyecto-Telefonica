@@ -1,5 +1,5 @@
 {"nombre":"Santiago Aguado","numero":"4242-2323","direccion":"Gotham City","estado":"Revisita","categoria":"Edificio","id":33}
-{"nombre":"Alan Molina","numero":"3030-2828","direccion":"Coruscant","estado":"Se Puede","categoria":"Casa","id":34}
+{"id":34,"nombre":"Alan Molina","numero":"3030-2828","direccion":"Coruscant","estado":"Se Puede","categoria":"Casa"}
 {"id":36,"nombre":"Constanza Guerrero","numero":"4545-3030","direccion":"Perritos 123","estado":"Revisita","categoria":"Negocio"}
 {"id":37,"nombre":"Jazmin Siles","numero":"4160-6063","direccion":"Salon de Ezeiza","estado":"Se Puede","categoria":"Edificio"}
 {"nombre":"Orne Alavar","numero":"4245-3030","direccion":"New York","estado":"Se Puede","categoria":"Casa","id":39}
