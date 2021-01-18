@@ -58,6 +58,7 @@ function CargarTabla() {
         //let listaArchivos=OrdenarPorID(respuesta,true);
         var listaArchivos = respuesta;
         var total = {};
+        CargarCbo(listaArchivos);
         total.archivos = listaArchivos.length;
         var nombreArchivo;
         var html = '<h1 style="padding-top: 2%;" class="text-white">Archivos</h1> ';
@@ -82,6 +83,106 @@ function CargarTabla() {
         var respuesta = JSON.parse(jqxhr.responseText);
         AlertDanger(respuesta.mensaje);
     });
+}
+function AgregarTelefono() {
+    var tel = {};
+    var pagina = "BACKEND/telefono/agregar";
+    tel.nombre = $("#txtNombre").val();
+    tel.numero = $("#txtNumero").val();
+    tel.direccion = $("#txtDireccion").val();
+    tel.estado = $("#cboEstado").val();
+    tel.categoria = $("#cboCategoria").val();
+    var nombreArchivo = $("#cboTerritorios").val();
+    if (AdministrarValidaciones(tel)) {
+        var form = new FormData();
+        form.append("cadenaJson", JSON.stringify(tel));
+        form.append("nombreArchivo", nombreArchivo);
+        $.ajax({
+            url: pagina,
+            type: "post",
+            data: form,
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            async: true
+        }).done(function (respuesta) {
+            AlertSuccess(respuesta.mensaje);
+            CargarTabla();
+            ArmarAgregar();
+        }).fail(function (jqxhr) {
+            console.log(jqxhr.responseText);
+            var respuesta = JSON.parse(jqxhr.responseText);
+            AlertDanger(respuesta.mensaje);
+        });
+    }
+}
+function ArmarAgregar() {
+    $("#txtNombre").val("");
+    $("#txtNumero").val("");
+    $("#txtDireccion").val("");
+    $("#cboEstado").val("---");
+    $("#cboCategoria").val("---");
+    $("#btnAgregar").val("Agregar");
+    $("#btnAgregar").attr("onclick", "Agregar()");
+}
+function AdministrarValidaciones(tel) {
+    var aux = "";
+    var mensaje = "";
+    var contador = 0;
+    var flagError = false;
+    var retorno = true;
+    if (tel.numero != null && tel.numero.length > 0) {
+        if (tel.nombre == null || tel.nombre.length == 0) {
+            aux += "El Nombre\n";
+            contador++;
+        }
+        if (tel.direccion == null || tel.direccion.length == 0) {
+            aux += "La Direccion\n";
+            contador++;
+        }
+        if (tel.estado == null || tel.estado.length == 0) {
+            aux += "El Estado\n";
+            contador++;
+        }
+        if (tel.categoria == null || tel.categoria.length == 0) {
+            aux += "La Categoria\n";
+            contador++;
+        }
+        if (contador > 1) {
+            mensaje += 'No se han ingresado:\n\n' + aux + '\n\nDesea continuar?\n\n(Se colocara "Desconocido" en los espacios vacios)';
+            flagError = true;
+        }
+        else if (contador == 1) {
+            mensaje += 'No se a ingresado:\n\n' + aux + '\n\nDesea continuar?\n\n(Se colocara "Desconocido" en el espacio vacio)';
+            flagError = true;
+        }
+    }
+    else {
+        AlertDanger("<strong>Error!!!</strong> No se puede ingresar un Telefono sin numero");
+        retorno = false;
+    }
+    if (flagError) {
+        retorno = confirm(mensaje);
+    }
+    return retorno;
+}
+function CargarCbo(array) {
+    var listaArchivos = new Array();
+    var cadena = "";
+    for (var i = 0; i < array.length; i++) {
+        var repetido = false;
+        for (var z = 0; z < listaArchivos.length; z++) {
+            if (listaArchivos[z].nombre == array[i].nombre) {
+                repetido = true;
+                break;
+            }
+        }
+        if (!repetido) {
+            listaArchivos.push(array[i]);
+            cadena += '<option value="' + array[i].nombre + '">' + array[i].nombre + '</opcion>';
+        }
+    }
+    $("#cboTerritorios").html(cadena);
 }
 function Agregar() {
     var nuevoTerri = $("#txtNuevo").val();
