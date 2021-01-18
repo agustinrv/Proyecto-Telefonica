@@ -1,10 +1,13 @@
 ///<reference path="node_modules/@types/jquery/index.d.ts" />
 ///<reference path="./genericas.ts" />
-//Falta boton descargar
 
-///NO AVABZAR HASTA ARMAR ALGO EN EL BACKEND
+
+
+
+
 function CargarTabla()
 {
+    
     let pagina="BACKEND/territorio/traerTodos";
     $.ajax({
         url:pagina,
@@ -16,28 +19,31 @@ function CargarTabla()
     }).done(function(respuesta){
 
         let fila=0;       
-        //let listaMeses=OrdenarPorID(respuesta,true);
+        //let listaArchivos=OrdenarPorID(respuesta,true);
+        let listaArchivos=respuesta;
         let total:any={};
-
-        total.meses=listaMeses.length;
-
-        let html='<h1 style="padding-top: 2%;">Año Actual</h1> ';
+        
+        
+        total.archivos=listaArchivos.length;
+        let nombreArchivo;
+        let html='<h1 style="padding-top: 2%;" class="text-white">Archivos</h1> ';
         html+='<div class="table-responsive">';
         html+='<table class="table table-sm table-dark table-hover">';
-        html+='<tr><th ></th><th>Nº</th><th>Mes</th><th class="h6">Fecha Mod.</th>';
+        html+='<tr><th></th><th>Nº</th><th class="text-center">Territorio</th><th>Fecha Mod.</th>';
         html+='<th class="text-center">Abrir</th><th class="pl-3">Eliminar</th><th class="pl-3">Descargar</th></tr>';
-        listaMeses.forEach(element => {
+        listaArchivos.forEach(element => {
             fila++;
-            html+='<tr onclick="SeleccionarFilaPrimary('+fila+','+total.meses+')" id="fila-'+ fila +'"><td></td><td>'+fila+'</td><td>'+element.nombre+'</td><td>'+element.fecha+'</td>';
+            nombreArchivo=element.nombre + ".json";
+            html+='<tr onclick="SeleccionarFilaPrimary('+fila+','+total.archivos+')" id="fila-'+ fila +'"><td></td><td>'+fila+'</td><td class="text-center">'+element.nombre+'</td><td>'+element.fecha+'</td>';
             html+='<td><input type="button" value="Abrir" class="btn btn-success btn-block" onclick=Abrir("'+element.nombre+'")></td>';
             html+='<td><input type="button" value="Eliminar" class="btn btn-danger " onclick=Eliminar("'+element.nombre+'")></td>';
-            html+='<td><a href="BACKEND/Meses/'+element.nombre+'" class="btn btn-info" download="'+element.nombre+'">Descargar</a></td></tr>';
+            html+='<td><a href="BACKEND/archivos/'+nombreArchivo+'" class="btn btn-info" download="'+nombreArchivo+'">Descargar</a></td></tr>';
         });
-        html+='<tr><td>Total:</td><td class="text-left" colspan="2">'+total.meses+' Meses</td>';
+        html+='<tr><td>Total:</td><td class="text-left" colspan="2">'+total.archivos+' Territorios</td>';
         html+='</table></div>';
         html+='<input type="button" value="Generar PDF" class="btn btn-primary" id="btnPdf">';
-        $("#tablaMes").html(html);
-    
+        $("#tablaTerri").html(html);
+
         //GenerarInforme(total);
     }).fail(function(jqxhr){
         let respuesta=JSON.parse(jqxhr.responseText);
@@ -48,11 +54,11 @@ function CargarTabla()
 
 function Agregar()
 {
-    let nuevoMes:any=$("#cboMeses").val();
-    let pagina="BACKEND/mes/agregar";
+    let nuevoTerri:any=$("#txtNuevo").val();
+    let pagina="BACKEND/territorio/agregar";
     
     let form = new FormData();
-    form.append("cadenaJson",nuevoMes);
+    form.append("cadenaJson",nuevoTerri);
 
     $.ajax({
         url:pagina,
@@ -73,8 +79,8 @@ function Agregar()
 
 function Eliminar(nombreArchivo)
 {
-    let pagina="./BACKEND/mes/borrar";
-    if(confirm("Desea eliminar el archivo: "+nombreArchivo))
+    let pagina="./BACKEND/territorio/borrar";
+    if(confirm("Desea eliminar el territorio: "+nombreArchivo))
     {
         $.ajax({
             url:pagina,
@@ -98,8 +104,8 @@ function Abrir(nombreArchivo)
 
     $("#archivo").val(nombreArchivo);
     let form:HTMLFormElement=<HTMLFormElement>document.getElementById("formArchivo");
-    form.submit();
     localStorage.setItem("nombreArchivo",nombreArchivo);
+    form.submit();
 }
 
 

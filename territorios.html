@@ -17,7 +17,7 @@
    <!--para iconos-->
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-   <script src="principal.js"></script>
+   <script src="Territorio.js"></script>
 
    <style>
     label{ color: white;}
@@ -36,7 +36,7 @@
           <ul class="navbar-nav">
   
             <li class="dropdown dropdown">
-              <a class="nav-link text-primary"  id="navbardrop" href="principal.html">
+              <a class="nav-link text-primary"  id="navbardrop" href="territorios.html">
                 Territorios<b class="caret"></b>
               </a>
             </li>
@@ -55,30 +55,30 @@
 
         <section class="row">
 
-            <section class="col-xl-3">
+            <section class="col-xl-5 col-lg-5 col-md-12 col-sm-12 ">
 
                 <section class="container mt-5">
 
                     <h1 style="padding-top: 2%;" class="text-white">Territorios</h1> 
 
-                    <form class="form-control h-100 bg-dark border-dark">
+                    <form class="form-control h-100 bg-dark border-dark" >
 
                         <section class="row">
 
-                            <section class="col-xl-2 mr-2">
+                            <section class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1 mr-4">
 
                                 <div class="form-row ">
-                                    <div class="col-form-label"><label for="txtNombre" class="h6">Nuevo Territorio</label></div>
+                                    <div class="col-form-label"><label for="txtNuevo" class="h6">Nuevo Territorio</label></div>
                                 </div>
 
                             </section>
 
-                            <section class="col-xl mt-2">
+                            <section class="col-xl col-lg col-md col-sm col ml-4 ml-sm-3 ml-md-1 ml-xl-3 ml-lg-4 mt-2">
 
                                   <div class="form-row ">
                                     <div class="col input-group mb-2">
                                         <label for="txtNombre" class="fas fa-book-open input-group-text"></label>
-                                        <input type="text" id="txtNombre" class="form-control "  placeholder="Nombre Completo">
+                                        <input type="text" id="txtNuevo" class="form-control "  placeholder="Nuevo Territorio">
                                     </div>
                                 </div>
 
@@ -93,15 +93,17 @@
 
                     </form>
 
+                    <div id="divAlert" style="padding-top: 3%;"></div>
+
                 </section>
 
 
             </section>
 
-            <section class="col-sm-12 col-md-12 col-lg col-xl">
+            <section class="col-sm-12 col-md-12 col-lg col-xl col-xs-12">
                 <div class="container mt-5">
           
-                  <div id="tablaTer" ></div>
+                  <div id="tablaTerri" ></div>
                 
                 </div>
             </section>
@@ -110,7 +112,9 @@
 
     </section>
 
-
+    <form action="./index.php" method="post" id="formArchivo">
+      <input type="hidden" name="archivo" id="archivo">
+  </form>
 
 
 </body>

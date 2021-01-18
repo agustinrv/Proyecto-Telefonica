@@ -16,10 +16,10 @@ function Agregar()
     
     if(AdministrarValidaciones(tel))
     {
-        //let nombreArchivo=localStorage.getItem("nombreArchivo");
+        let nombreArchivo=localStorage.getItem("nombreArchivo");
         let form = new FormData();
         form.append("cadenaJson",JSON.stringify(tel));
-        form.append("nombreArchivo","prueba");
+        form.append("nombreArchivo",nombreArchivo);
 
         $.ajax({
             url:pagina,
@@ -49,7 +49,7 @@ function Agregar()
 
 function CargarTabla()
 {
-    let nombreArchivo="prueba";//localStorage.getItem("nombreArchivo");
+    let nombreArchivo=localStorage.getItem("nombreArchivo");
 
     let pagina="BACKEND/telefono/traerTodos/" + nombreArchivo;
     
@@ -74,7 +74,7 @@ function CargarTabla()
                 let listaTelefonos=respuesta.listaTelefonos;
                 let total=CalcularTotales(listaTelefonos);
 
-                let archivo= "prueba" //localStorage.getItem("nombreArchivo");
+                let archivo= localStorage.getItem("nombreArchivo");
                 
                 let html='<h1 class="text-white pt-2"">'+ archivo +'</h1> ';
                 html+='<div class="table-responsive">';
@@ -198,7 +198,7 @@ function Eliminar(id,fila)
 
     if(confirm("Desea eliminar la fila nº" + fila))
     {
-        let archivo= "prueba"//localStorage.getItem("nombreArchivo");
+        let archivo= localStorage.getItem("nombreArchivo");
         $.ajax({
             url:pagina,
             type:"delete",
@@ -230,14 +230,11 @@ function Modificar(id)
     tel.estado=$("#cboEstado").val();
     tel.categoria=$("#cboCategoria").val();
   
-
-
-
-    let archivo="prueba";//localStorage.getItem("nombreArchivo");
+    let nombreArchivo=localStorage.getItem("nombreArchivo");
     
     if(AdministrarValidaciones(tel))
     {
-        let json={"cadenaJson":JSON.stringify(tel),"nombreArchivo":archivo};
+        let json={"cadenaJson":JSON.stringify(tel),"nombreArchivo":nombreArchivo};
         
         $.ajax({
             url:pagina,
@@ -291,7 +288,7 @@ function AdministrarValidaciones(tel)
     let mensaje:string="";
     let contador=0;
     let flagError=false;
-    let retorno=false;
+    let retorno=true;
 
     if(tel.numero !=null && tel.numero.length>0)
     {
@@ -325,7 +322,7 @@ function AdministrarValidaciones(tel)
             mensaje+='No se han ingresado:\n\n' + aux + '\n\nDesea continuar?\n\n(Se colocara "Desconocido" en los espacios vacios)';
             flagError=true;
         }
-        else
+        else if(contador==1)
         {
             mensaje+='No se a ingresado:\n\n' + aux + '\n\nDesea continuar?\n\n(Se colocara "Desconocido" en el espacio vacio)';
             flagError=true;

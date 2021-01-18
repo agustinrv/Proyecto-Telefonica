@@ -53,10 +53,10 @@ function Agregar() {
     tel.estado = $("#cboEstado").val();
     tel.categoria = $("#cboCategoria").val();
     if (AdministrarValidaciones(tel)) {
-        //let nombreArchivo=localStorage.getItem("nombreArchivo");
+        var nombreArchivo = localStorage.getItem("nombreArchivo");
         var form = new FormData();
         form.append("cadenaJson", JSON.stringify(tel));
-        form.append("nombreArchivo", "prueba");
+        form.append("nombreArchivo", nombreArchivo);
         $.ajax({
             url: pagina,
             type: "post",
@@ -78,7 +78,7 @@ function Agregar() {
 }
 //Deberia verse selecionada la fila que voy a modificar
 function CargarTabla() {
-    var nombreArchivo = "prueba"; //localStorage.getItem("nombreArchivo");
+    var nombreArchivo = localStorage.getItem("nombreArchivo");
     var pagina = "BACKEND/telefono/traerTodos/" + nombreArchivo;
     $.ajax({
         url: pagina,
@@ -96,7 +96,7 @@ function CargarTabla() {
                 var fila_1 = 0;
                 var listaTelefonos = respuesta.listaTelefonos;
                 var total_1 = CalcularTotales(listaTelefonos);
-                var archivo = "prueba"; //localStorage.getItem("nombreArchivo");
+                var archivo = localStorage.getItem("nombreArchivo");
                 var html_1 = '<h1 class="text-white pt-2"">' + archivo + '</h1> ';
                 html_1 += '<div class="table-responsive">';
                 html_1 += '<table class="table table-sm table-dark table-hover">';
@@ -179,7 +179,7 @@ function GenerarInforme(total) {
 function Eliminar(id, fila) {
     var pagina = "BACKEND/telefono/borrar";
     if (confirm("Desea eliminar la fila nº" + fila)) {
-        var archivo = "prueba"; //localStorage.getItem("nombreArchivo");
+        var archivo = localStorage.getItem("nombreArchivo");
         $.ajax({
             url: pagina,
             type: "delete",
@@ -204,9 +204,9 @@ function Modificar(id) {
     tel.direccion = $("#txtDireccion").val();
     tel.estado = $("#cboEstado").val();
     tel.categoria = $("#cboCategoria").val();
-    var archivo = "prueba"; //localStorage.getItem("nombreArchivo");
+    var nombreArchivo = localStorage.getItem("nombreArchivo");
     if (AdministrarValidaciones(tel)) {
-        var json = { "cadenaJson": JSON.stringify(tel), "nombreArchivo": archivo };
+        var json = { "cadenaJson": JSON.stringify(tel), "nombreArchivo": nombreArchivo };
         $.ajax({
             url: pagina,
             type: "put",
@@ -249,7 +249,7 @@ function AdministrarValidaciones(tel) {
     var mensaje = "";
     var contador = 0;
     var flagError = false;
-    var retorno = false;
+    var retorno = true;
     if (tel.numero != null && tel.numero.length > 0) {
         if (tel.nombre == null || tel.nombre.length == 0) {
             aux += "El Nombre\n";
@@ -271,7 +271,7 @@ function AdministrarValidaciones(tel) {
             mensaje += 'No se han ingresado:\n\n' + aux + '\n\nDesea continuar?\n\n(Se colocara "Desconocido" en los espacios vacios)';
             flagError = true;
         }
-        else {
+        else if (contador == 1) {
             mensaje += 'No se a ingresado:\n\n' + aux + '\n\nDesea continuar?\n\n(Se colocara "Desconocido" en el espacio vacio)';
             flagError = true;
         }

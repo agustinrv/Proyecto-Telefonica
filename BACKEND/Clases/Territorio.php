@@ -45,7 +45,7 @@ class Territorio
         if(isset($listaArchivos))
         {
             foreach ($listaArchivos as $key => $value) {
-                if($value->nombre==$nuevoArchivo)
+                if($value->nombre .".json"==$nuevoArchivo)
                 {
                     $flag=false;
                     break;
@@ -68,6 +68,7 @@ class Territorio
 
         return $response;
     }
+
 
     public static function CrearArchivoJson($nombreArchivo)
     {
@@ -114,9 +115,10 @@ class Territorio
     public static function ObtenerNombresArchivos()
     {
         $flag=false;
-        $archivos=scandir("./Archivos");
+        $archivos=scandir("./Archivos",);
         $retorno=null;
         
+
         if(isset($archivos))
         {
             if(!empty($archivos))
@@ -129,12 +131,11 @@ class Territorio
         {
             unset($archivos[0]);
             unset($archivos[1]);
-            
             $listaArchivos=array();
             
             foreach ($archivos as $key => $value) {
                 $json=new stdClass();
-                $json->nombre=$value;
+                $json->nombre=pathinfo($value, PATHINFO_FILENAME);
                 $json->fecha=date("d-m-Y H:i:s",filectime("./Archivos/" . $value));
                // $json->id=self::GenerarID($value);
                 
