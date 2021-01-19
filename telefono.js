@@ -97,7 +97,11 @@ function CargarTabla() {
                 var listaTelefonos = respuesta.listaTelefonos;
                 var total_1 = CalcularTotales(listaTelefonos);
                 var archivo = localStorage.getItem("nombreArchivo");
-                var html_1 = '<h1 class="text-white pt-2"">' + archivo + '</h1> ';
+                var color_1 = "";
+                var html_1 = '<h1 class="text-white pt-2"">' + archivo + '</h1>';
+                html_1 += '<span class="fas fa-circle text-success ">"Se Puede"</span>';
+                html_1 += '<span class="fas fa-circle text-warning ml-2">"Revisita"</span>';
+                html_1 += '<span class="fas fa-circle text-danger ml-2">"No llamar"</span>';
                 html_1 += '<div class="table-responsive">';
                 html_1 += '<table class="table table-sm table-dark table-hover">';
                 html_1 += '<tr><th></th><th class="pl-4">Nº</th><th class="text-center">Nombre</th><th class="text-center">Numero</th><th class="text-center">Direccion</th>';
@@ -109,9 +113,11 @@ function CargarTabla() {
                     total_1.numero += parseInt(element.numero);
                     total_1.direccion += parseInt(element.direccion);
                     total_1.estado += parseInt(element.estado);
+                    color_1 = PrepararColor(element.estado);
                     html_1 += '<tr onclick="SeleccionarFilaPrimary(' + fila_1 + "," + total_1.telefonos + ')" id="fila-' + fila_1 + '" ><td></td>';
                     html_1 += '<td class="text-center">' + fila_1 + '</td><td class="text-center">' + element.nombre + '</td>' + '<td class="text-center">' + element.numero + '</td>';
-                    html_1 += '<td class="text-center">' + element.direccion + '</td>' + '<td class="text-center">' + element.estado + '</td>';
+                    html_1 += '<td class="text-center">' + element.direccion + '</td>';
+                    html_1 += '<td class="text-center"><span class="fas fa-circle ' + color_1 + '"></span></td>';
                     html_1 += '<td class="text-center">' + element.categoria + '</td>';
                     html_1 += "<td><input type='button' value='Modificar' class='btn btn-warning' onclick='ArmarModificar(" + JSON.stringify(element) + "," + fila_1 + ")'></td>";
                     html_1 += '<td><input type="button" value="Eliminar" class="btn btn-danger" onclick="Eliminar(' + element.id + "," + fila_1 + ')"></td></tr>';
@@ -125,6 +131,23 @@ function CargarTabla() {
     }).fail(function (jqxhr) {
         console.log(jqxhr.responseText);
     });
+}
+function PrepararColor(estado) {
+    var retorno = 'text-dark';
+    switch (estado.toLowerCase()) {
+        case "se puede":
+            retorno = 'text-success';
+            break;
+        case "no llamar":
+            retorno = 'text-danger';
+            break;
+        case "revisita":
+            retorno = 'text-warning';
+            break;
+        default:
+            break;
+    }
+    return retorno;
 }
 function CalcularTotales(listaTelefonos) {
     var total = {};

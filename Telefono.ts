@@ -75,8 +75,12 @@ function CargarTabla()
                 let total=CalcularTotales(listaTelefonos);
 
                 let archivo= localStorage.getItem("nombreArchivo");
+                let color="";
                 
-                let html='<h1 class="text-white pt-2"">'+ archivo +'</h1> ';
+                let html='<h1 class="text-white pt-2"">'+ archivo +'</h1>';
+                html+='<span class="fas fa-circle text-success ">"Se Puede"</span>';
+                html+='<span class="fas fa-circle text-warning ml-2">"Revisita"</span>';
+                html+='<span class="fas fa-circle text-danger ml-2">"No llamar"</span>';
                 html+='<div class="table-responsive">';
                 html+='<table class="table table-sm table-dark table-hover">';
                 html+='<tr><th></th><th class="pl-4">Nº</th><th class="text-center">Nombre</th><th class="text-center">Numero</th><th class="text-center">Direccion</th>';
@@ -88,10 +92,14 @@ function CargarTabla()
                     total.numero+=parseInt(element.numero);
                     total.direccion+=parseInt(element.direccion);
                     total.estado+=parseInt(element.estado);
+                    color=PrepararColor(element.estado);
+
+
 
                     html+='<tr onclick="SeleccionarFilaPrimary('+fila+","+total.telefonos+')" id="fila-'+fila+'" ><td></td>';
                     html+='<td class="text-center">'+fila+'</td><td class="text-center">'+element.nombre+'</td>'+'<td class="text-center">'+element.numero+'</td>';
-                    html+='<td class="text-center">'+element.direccion+'</td>'+'<td class="text-center">'+element.estado+'</td>';
+                    html+='<td class="text-center">'+element.direccion+'</td>';
+                    html+='<td class="text-center"><span class="fas fa-circle '+color+'"></span></td>';
                     html+='<td class="text-center">'+element.categoria+'</td>';
                     html+="<td><input type='button' value='Modificar' class='btn btn-warning' onclick='ArmarModificar("+JSON.stringify(element) +","+fila+")'></td>";
                     html+='<td><input type="button" value="Eliminar" class="btn btn-danger" onclick="Eliminar('+element.id+","+fila+')"></td></tr>';
@@ -117,6 +125,32 @@ function CargarTabla()
         console.log(jqxhr.responseText);
     });
     
+}
+
+function PrepararColor(estado:string)
+{
+    let retorno='text-dark';
+    switch (estado.toLowerCase()) {
+        case "se puede":
+
+            retorno='text-success';
+            break;
+
+        case "no llamar":
+
+            retorno='text-danger';
+            break;
+
+        case "revisita":
+            retorno='text-warning';
+            break;
+
+    
+        default:
+            break;
+    }
+
+    return retorno;
 }
 
 function CalcularTotales(listaTelefonos:any)
